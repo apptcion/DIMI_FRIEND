@@ -10,10 +10,10 @@ workflows:
       ios_signing:
         provisioning_profiles:
           - bundle_id: "com.dimi_friend"
-            path: "ios_provisioning_profile.mobileprovision"
+            profile_reference: "ios_provisioning_profile"  # Codemagic에서 설정한 프로필 이름
         certificates:
-          - path: "ios_distribution_certificate.p12"
-            password: Encrypted_PASSWORD
+          - certificate_reference: "ios_distribution_certificate"  # Codemagic에서 설정한 인증서 이름
+            password: $CERTIFICATE_PASSWORD
     scripts:
       - name: Install dependencies
         script: |
