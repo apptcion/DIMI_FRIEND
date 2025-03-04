@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "372326566736",
+    "project_id": "dimifirend",
+    "storage_bucket": "dimifirend.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372326566736:android:279ea50cea78d294df3a55",
+        "android_client_info": {
+          "package_name": "com.dimi_friend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "372326566736-9e55ov6sophbkuf04226s5bodh6mp9s4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dimi_friend",
+            "certificate_hash": "0dd23e3af16a39ed91f9ed763a7d345c865ea47e"
+          }
+        },
+        {
+          "client_id": "372326566736-jsec8ulttlea659uuarpjuei484a057n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dimi_friend",
+            "certificate_hash": "7c4e817208d660eae9ce6cf872d83e58b20b90fd"
+          }
+        },
+        {
+          "client_id": "372326566736-lvnaqn66c8tnbag8g34et4djouuuoq0f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dimi_friend",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "372326566736-tri1dhp6nnarlvimg3iqbe5ct2l3vqc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Nmw59NuNSpQsMdfPFeqVDRxEpL0MRrQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372326566736-tri1dhp6nnarlvimg3iqbe5ct2l3vqc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
