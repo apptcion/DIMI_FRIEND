@@ -1,12 +1,31 @@
 workflows:
-  ios-workflow:
-    name: iOS Workflow 
+  react-native-ios:
+    name: React Native iOS
+    instance_type: mac_mini_m2  # macOS 빌드 머신 사용
+    integrations:
+      app_store_connect: DIMIFRIEND_CODEMAGIC  # App Store Connect API 키 이름
     environment:
       ios_signing:
-        distribution_type: app_store
+        distribution_type: app_store  # App Store 배포용
         bundle_identifier: com.dimifriend
+      vars:
+        XCODE_WORKSPACE: "DIMI_FRIEND.xcworkspace"  # Xcode 워크스페이스 이름
+        XCODE_SCHEME: "DIMI_FRIEND"            # Xcode 스킴 이름
     scripts:
-      - name: Set up code signing settings on Xcode project
+      - name: Install npm dependencies
+        script: npm install
+      - name: Install CocoaPods dependencies
         script: |
-          pip install codemagic-cli-tools --upgrade
-          xcode-project use-profiles
+          cd ios
+          pod install
+      - name: Build IPA for distribution
+        script: |
+          xcode-project build-ipa \
+            --workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true  # TestFlight로 자동 제출
