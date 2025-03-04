@@ -1,51 +1,12 @@
 workflows:
-  ios-release:
-    name: iOS Release Build
-    max_build_duration: 60
-    instance_type: mac_mini
+  ios-workflow:
+    name: iOS Workflow 
     environment:
-      vars:
-        XCODE_WORKSPACE: "ios/DIMI_FRIEND.xcworkspace"
-        XCODE_SCHEME: "DIMI_FRIEND"
-        PROVISIONING_PROFILE_BASE64: "$PROVISIONING_PROFILE_BASE64"
-        CERTIFICATE_BASE64: "$CERTIFICATE_BASE64"
-        CERTIFICATE_PASSWORD: "$CERTIFICATE_PASSWORD"
-        APP_STORE_CONNECT_EMAIL: "$APP_STORE_CONNECT_EMAIL"
-        APP_SPECIFIC_PASSWORD: "$APP_SPECIFIC_PASSWORD"
-    # steps는 job으로 추가되어야 합니다.
-    jobs:
-      ios-release-job:
-        steps:
-          - name: Decode provisioning profile
-            script: |
-              echo $PROVISIONING_PROFILE_BASE64 | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/profile.mobileprovision"
-          
-          - name: Decode distribution certificate
-            script: |
-              echo $CERTIFICATE_BASE64 | base64 --decode > certificate.p12
-              security create-keychain -p "123456" build.keychain
-              security default-keychain -s build.keychain
-              security unlock-keychain -p "123456" build.keychain
-              security import certificate.p12 -P $CERTIFICATE_PASSWORD -A
-              security set-key-partition-list -S apple-tool:,apple: -s -k "123456" build.keychain
-          
-          - name: Install dependencies
-            script: |
-              npm install
-              cd ios && pod install && cd ..
-          
-          - name: Build iOS app
-            script: |
-              xcodebuild -workspace $XCODE_WORKSPACE -scheme $XCODE_SCHEME -sdk iphoneos -configuration Release archive -archivePath $CM_BUILD_DIR/build.xcarchive
-          
-          - name: Export IPA
-            script: |
-              xcodebuild -exportArchive -archivePath $CM_BUILD_DIR/build.xcarchive -exportOptionsPlist ios/exportOptions.plist -exportPath $CM_BUILD_DIR/export
-
-          - name: Upload to App Store
-            script: |
-              xcrun altool --upload-app -f $CM_BUILD_DIR/export/DIMI_FRIEND.ipa -t ios -u "$APP_STORE_CONNECT_EMAIL" -p "$APP_SPECIFIC_PASSWORD"
-    
-    # 빌드 아티팩트 경로
-    artifacts:
-      - $CM_BUILD_DIR/export/*.ipa
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.dimifriend
+    scripts:
+      - name: Set up code signing settings on Xcode project
+        script: |
+          pip install codemagic-cli-tools --upgrade
+          xcode-project use-profiles
