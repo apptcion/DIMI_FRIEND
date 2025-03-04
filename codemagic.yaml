@@ -10,15 +10,15 @@ workflows:
     steps:
       - name: Decode provisioning profile
         script: |
-          echo $PROVISIONING_PROFILE_BASE64 | base64 --decode > $HOME/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
+          echo $PROVISIONING_PROFILE_BASE64 | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/profile.mobileprovision"
       - name: Decode distribution certificate
         script: |
           echo $CERTIFICATE_BASE64 | base64 --decode > certificate.p12
-          security create-keychain -p "" build.keychain
+          security create-keychain -p "your_password" build.keychain
           security default-keychain -s build.keychain
-          security unlock-keychain -p "" build.keychain
+          security unlock-keychain -p "your_password" build.keychain
           security import certificate.p12 -P $CERTIFICATE_PASSWORD -A
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "your_password" build.keychain
       - name: Install dependencies
         script: |
           npm install
