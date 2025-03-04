@@ -1,0 +1,29 @@
+workflows:
+  ios-build:
+    name: iOS Build
+    max_build_duration: 60
+    instance_type: mac_mini
+    environment:
+      vars:
+        XCODE_WORKSPACE: "ios/DIMI_FRIEND.xcworkspace"
+        XCODE_SCHEME: "DIMI_FRIEND"
+      ios_signing:
+        provisioning_profiles:
+          - bundle_id: "com.dimi_friend"
+            path: "ios_provisioning_profile.mobileprovision"
+        certificates:
+          - path: "ios_distribution_certificate.p12"
+            password: Encrypted_PASSWORD
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install
+          cd ios && pod install && cd ..
+      - name: Build iOS app
+        script: |
+          xcodebuild -workspace $XCODE_WORKSPACE -scheme $XCODE_SCHEME -sdk iphoneos -configuration Release archive -archivePath $CM_BUILD_DIR/build.xcarchive
+      - name: Export IPA
+        script: |
+          xcodebuild -exportArchive -archivePath $CM_BUILD_DIR/build.xcarchive -exportOptionsPlist ios/exportOptions.plist -exportPath $CM_BUILD_DIR/export
+    artifacts:
+      - build/ios/ipa/*.ipa
