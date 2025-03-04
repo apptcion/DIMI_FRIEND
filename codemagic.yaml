@@ -14,11 +14,11 @@ workflows:
       - name: Decode distribution certificate
         script: |
           echo $CERTIFICATE_BASE64 | base64 --decode > certificate.p12
-          security create-keychain -p "your_password" build.keychain
+          security create-keychain -p "123456" build.keychain
           security default-keychain -s build.keychain
-          security unlock-keychain -p "your_password" build.keychain
+          security unlock-keychain -p "123456" build.keychain
           security import certificate.p12 -P $CERTIFICATE_PASSWORD -A
-          security set-key-partition-list -S apple-tool:,apple: -s -k "your_password" build.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "123456" build.keychain
       - name: Install dependencies
         script: |
           npm install
