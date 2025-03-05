@@ -1,18 +1,17 @@
 workflows:
   ios:
     name: iOS Build and Release
-    max_build_duration: 60
-    environment:
-      vars:
-        APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID
-        APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        APP_STORE_CONNECT_PRIVATE_KEY: $APP_STORE_CONNECT_PRIVATE_KEY
+    code_signing:
+      ios:
+        - certificate: "myCert"
+          certificate_keychain: "login.keychain"
+          provisioning_profile: "DIMI_FRIEND_PROFILE"
     scripts:
       - name: Install dependencies
         script: |
           npm install
           cd ios
-          pod install  # CocoaPods 의존성 설치
+          pod install
           cd ..
       - name: Build iOS app
         script: |
@@ -21,8 +20,13 @@ workflows:
             -configuration Release \
             -sdk iphoneos \
             -archivePath $PWD/build/DIMI_FRIEND.xcarchive \
-            -allowProvisioningUpdates \
             clean archive
+      - name: Export IPA
+        script: |
+          xcodebuild -exportArchive \
+            -archivePath $PWD/build/DIMI_FRIEND.xcarchive \
+            -exportPath $PWD/build/DIMI_FRIEND \
+            -exportOptionsPlist ios/exportOptions.plist
       - name: Deploy to App Store
         script: |
           curl -s https://raw.githubusercontent.com/codemagic-ci-cd/ios-codemagic-scripts/master/fastlane_upload_to_app_store.sh > fastlane_upload_to_app_store.sh
