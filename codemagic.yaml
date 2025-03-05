@@ -1,32 +1,26 @@
 workflows:
-  react-native-ios:
-    name: React Native iOS
-    instance_type: mac_mini_m2  # macOS 빌드 머신 사용
-    integrations:
-      app_store_connect: DIMIFRIEND_CODEMAGIC  # App Store Connect API 키 이름
+  ios:
+    name: iOS Build and Release
+    max_build_duration: 60
     environment:
-      ios_signing:
-        distribution_type: app_store  # App Store 배포용
-        bundle_identifier: com.dimifriend
       vars:
-        XCODE_WORKSPACE: "DIMI_FRIEND.xcworkspace"  # Xcode 워크스페이스 이름
-        XCODE_SCHEME: "DIMI_FRIEND"            # Xcode 스킴 이름
+        APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID
+        APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        APP_STORE_CONNECT_PRIVATE_KEY: $APP_STORE_CONNECT_PRIVATE_KEY
     scripts:
-      - name: Install npm dependencies
-        script: npm install
-      - name: Install CocoaPods dependencies
+      - name: Install dependencies
         script: |
+          npm install
           cd ios
           pod install
-      - name: Build IPA for distribution
+          cd ..
+      - name: Build iOS app
         script: |
-          xcode-project build-ipa \
-            --workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
-            --scheme "$XCODE_SCHEME" \
-            --export-options-plist "$CM_BUILD_DIR/ios/export_options.plist"
-    artifacts:
-      - build/ios/ipa/*.ipa
-    publishing:
-      app_store_connect:
-        auth: integration
-        submit_to_testflight: true  # TestFlight로 자동 제출
+          npx react-native run-ios --configuration Release
+      - name: Deploy to App Store
+        script: |
+          # App Store 배포 스크립트 시작
+          curl -s https://raw.githubusercontent.com/codemagic-ci-cd/ios-codemagic-scripts/master/fastlane_upload_to_app_store.sh > fastlane_upload_to_app_store.sh
+          chmod +x fastlane_upload_to_app_store.sh
+          ./fastlane_upload_to_app_store.sh
+          # App Store 배포 스크립트 끝
