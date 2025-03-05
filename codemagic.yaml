@@ -3,7 +3,7 @@ workflows:
     name: React Native iOS
     instance_type: mac_mini_m2  # macOS 빌드 머신 사용
     integrations:
-      app_store_connect: DIMI_FRIEND  # App Store Connect API 키 이름
+      app_store_connect: DIMIFRIEND_CODEMAGIC  # App Store Connect API 키 이름
     environment:
       ios_signing:
         distribution_type: app_store  # App Store 배포용
