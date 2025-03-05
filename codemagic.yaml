@@ -1,11 +1,6 @@
 workflows:
   ios:
     name: iOS Build and Release
-    code_signing:
-      ios:
-        - certificate: "myCert"
-          certificate_keychain: "login.keychain"
-          provisioning_profile: "DIMI_FRIEND_PROFILE"
     scripts:
       - name: Install dependencies
         script: |
