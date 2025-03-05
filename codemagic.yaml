@@ -21,6 +21,7 @@ workflows:
             -configuration Release \
             -sdk iphoneos \
             -archivePath $PWD/build/DIMI_FRIEND.xcarchive \
+            -allowProvisioningUpdates \
             clean archive
       - name: Deploy to App Store
         script: |
