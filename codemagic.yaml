@@ -15,7 +15,7 @@ workflows:
             -configuration Release \
             -sdk iphoneos \
             -archivePath $PWD/build/DIMI_FRIEND.xcarchive \
-            DEVELOPMENT_TEAM=34B6SX46T2
+            DEVELOPMENT_TEAM=34B6SX46T2 \
             clean archive
       - name: Export IPA
         script: |
