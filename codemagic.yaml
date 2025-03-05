@@ -12,12 +12,11 @@ workflows:
         script: |
           npm install
           cd ios
-          pod deintergrate
-          pod install
+          pod install  # CocoaPods 의존성 설치
           cd ..
       - name: Build iOS app
         script: |
-          xcodebuild -workspace ios/DIMI_FRIEND.xcworkspace \
+          xcodebuild -project ios/DIMI_FRIEND.xcodeproj \
             -scheme DIMI_FRIEND \
             -configuration Release \
             -sdk iphoneos \
