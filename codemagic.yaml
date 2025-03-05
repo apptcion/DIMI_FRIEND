@@ -1,30 +1,51 @@
 workflows:
-  ios:
-    name: iOS Build and Release
+  react_native_ios:
+    name: React Native iOS Workflow
+    environment:
+      vars:
+        PROJECT_NAME: "DIMI_FRIEND" # 실제 프로젝트 이름으로 변경하세요
+        BUNDLE_IDENTIFIER: "com.dimifriends" # 실제 번들 식별자로 변경하세요
+        APPLE_TEAM_ID: "34B6SX46T2" # Apple 개발자 팀 ID
+        APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_IDENTIFIER }} # App Store Connect API 키 ID
+        APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }} # App Store Connect API 발급자 ID
+        APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }} # App Store Connect API 키 내용(Base64 인코딩된 값)
+      node: latest
+      xcode: latest
     scripts:
       - name: Install dependencies
         script: |
           npm install
+      - name: Install CocoaPods
+        script: |
           cd ios
           pod install
           cd ..
-      - name: Build iOS app
+      - name: Set build number
         script: |
-          xcodebuild -project ios/DIMI_FRIEND.xcodeproj \
-            -scheme DIMI_FRIEND \
-            -configuration Release \
-            -sdk iphoneos \
-            -archivePath $PWD/build/DIMI_FRIEND.xcarchive \
-            DEVELOPMENT_TEAM=34B6SX46T2 \
-            clean archive
+          cd ios
+          agvtool new-version -all $(date +%s)
+          cd ..
+      - name: Build iOS
+        script: |
+          xcodebuild -project ios/$PROJECT_NAME.xcodeproj \
+                     -scheme $PROJECT_NAME \
+                     -sdk iphoneos \
+                     -configuration Release \
+                     -archivePath $PWD/build/$PROJECT_NAME.xcarchive \
+                     clean archive
       - name: Export IPA
         script: |
           xcodebuild -exportArchive \
-            -archivePath $PWD/build/DIMI_FRIEND.xcarchive \
-            -exportPath $PWD/build/DIMI_FRIEND \
-            -exportOptionsPlist ios/exportOptions.plist
-      - name: Deploy to App Store
-        script: |
-          curl -s https://raw.githubusercontent.com/codemagic-ci-cd/ios-codemagic-scripts/master/fastlane_upload_to_app_store.sh > fastlane_upload_to_app_store.sh
-          chmod +x fastlane_upload_to_app_store.sh
-          ./fastlane_upload_to_app_store.sh
+                     -archivePath $PWD/build/$PROJECT_NAME.xcarchive \
+                     -exportOptionsPlist ios/exportOptions.plist \
+                     -exportPath $PWD/build/ipa
+    artifacts:
+      - build/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        auth:
+          api_key: $APP_STORE_CONNECT_API_KEY
+          key_id: $APP_STORE_CONNECT_API_KEY_ID
+          issuer_id: $APP_STORE_CONNECT_API_ISSUER_ID
+        submit_to_testflight: true
+        submit_to_app_store: false
