@@ -12,15 +12,19 @@ workflows:
         script: |
           npm install
           cd ios
+          pod deintergrate
           pod install
           cd ..
       - name: Build iOS app
         script: |
-          npx react-native run-ios --mode Release
+          xcodebuild -workspace ios/DIMI_FRIEND.xcworkspace \
+            -scheme DIMI_FRIEND \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath $PWD/build/DIMI_FRIEND.xcarchive \
+            clean archive
       - name: Deploy to App Store
         script: |
-          # App Store 배포 스크립트 시작
           curl -s https://raw.githubusercontent.com/codemagic-ci-cd/ios-codemagic-scripts/master/fastlane_upload_to_app_store.sh > fastlane_upload_to_app_store.sh
           chmod +x fastlane_upload_to_app_store.sh
           ./fastlane_upload_to_app_store.sh
-          # App Store 배포 스크립트 끝
