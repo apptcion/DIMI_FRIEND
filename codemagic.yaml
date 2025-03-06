@@ -2,7 +2,7 @@ workflows:
   react_native_ios:
     name: React Native iOS Workflow
     integrations:
-      app_store_connect: your_api_key_name # Codemagic에 추가한 App Store Connect API 키 이름
+      app_store_connect: DIMIFRIEND_CODEMAGIC # Codemagic에 추가한 App Store Connect API 키 이름
     environment:
       vars:
         PROJECT_NAME: "DIMI_FRIEND" # 실제 프로젝트 이름으로 변경하세요
