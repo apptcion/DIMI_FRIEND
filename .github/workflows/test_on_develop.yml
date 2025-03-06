@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: Start xcode build 🛠
         run: |
-          xcodebuild clean test -project DIMI_FRIEND/DIMI_FRIEND.xcodeproj -scheme DIMI_FRIEND -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.4'
+          xcodebuild clean test -project DIMI_FRIEND.xcodeproj -scheme DIMI_FRIEND -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.4'
