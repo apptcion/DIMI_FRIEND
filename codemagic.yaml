@@ -11,6 +11,7 @@ workflows:
     scripts:
       # 1. iOS 디렉토리로 이동 및 CocoaPods 설치
       - cd ios
+      - ls -la
       - pod install
 
       # 2. Xcode 아카이브 생성 (YourApp.xcworkspace, YourApp 스킴, Release 설정)
