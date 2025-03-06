@@ -60,7 +60,7 @@ jobs:
         run: |
           xcodebuild -exportArchive \
             -archivePath $XC_ARCHIVE \
-            -exportOptionsPlist ExportOptions.plist \
+            -exportOptionsPlist ios/ExportOptions.plist \
             -exportPath ${{ github.workspace }} \
             -allowProvisioningUpdates
 
