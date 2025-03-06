@@ -31,4 +31,5 @@ workflows:
     publishing:
       app_store_connect:
         api_key: $APP_STORE_CONNECT_PRIVATE_KEY         # App Store Connect API 키 (Codemagic 대시보드 secrets에 등록)
-        api_issuer: $APP_STORE_CONNECT_ISSUER_ID   # App Store Connect API Issuer ID
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID   # App Store Connect API Issuer ID
