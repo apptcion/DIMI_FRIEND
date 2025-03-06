@@ -1,14 +1,13 @@
 workflows:
   react_native_ios:
     name: React Native iOS Workflow
+    integrations:
+      app_store_connect: your_api_key_name # Codemagic에 추가한 App Store Connect API 키 이름
     environment:
       vars:
         PROJECT_NAME: "DIMI_FRIEND" # 실제 프로젝트 이름으로 변경하세요
         BUNDLE_IDENTIFIER: "com.dimifriends" # 실제 번들 식별자로 변경하세요
         APPLE_TEAM_ID: "34B6SX46T2" # Apple 개발자 팀 ID
-        APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_IDENTIFIER }} # App Store Connect API 키 ID
-        APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }} # App Store Connect API 발급자 ID
-        APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }} # App Store Connect API 키 내용(Base64 인코딩된 값)
       node: latest
       xcode: latest
     scripts:
