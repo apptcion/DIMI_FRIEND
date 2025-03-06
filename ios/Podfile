@@ -1,6 +1,5 @@
 platform :ios, '15.0'
 # use_frameworks! :linkage => :static # 이 부분은 필요 없을 수 있음
-prepare_react_native_project!
 
 config = use_native_modules!
 target 'DIMI_FRIEND' do
