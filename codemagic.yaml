@@ -43,9 +43,9 @@ workflows:
       - build/ipa/*.ipa
     publishing:
       app_store_connect:
-        auth:
-          api_key: $APP_STORE_CONNECT_API_KEY
-          key_id: $APP_STORE_CONNECT_API_KEY_ID
-          issuer_id: $APP_STORE_CONNECT_API_ISSUER_ID
+        auth: integration
+        api_key: $APP_STORE_CONNECT_API_KEY
+        key_id: $APP_STORE_CONNECT_API_KEY_ID
+        issuer_id: $APP_STORE_CONNECT_API_ISSUER_ID
         submit_to_testflight: true
         submit_to_app_store: false
