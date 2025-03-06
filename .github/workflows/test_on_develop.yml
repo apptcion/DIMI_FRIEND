@@ -1,45 +1,55 @@
-name: Xcode - Build and Analyze
+name: iOS Build & Test
 
 on:
   push:
-    branches: [ "develop" ]
+    branches:
+      - main
+      - develop
   pull_request:
-    branches: [ "develop" ]
+    branches:
+      - main
+      - develop
 
 jobs:
   build:
     runs-on: macos-latest
+
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npx pod-install
 
-      - name: Clean CocoaPods Cache and Install Dependencies
+      - name: Fix CocoaPods Issues
         run: |
           cd ios
           pod deintegrate
-          pod cache clean --all
           pod install --repo-update
 
-      - name: Fix IPHONEOS_DEPLOYMENT_TARGET Warning
-        run: |
-          cd ios
-          echo "Updating deployment target..."
-          find . -name "project.pbxproj" -exec sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = [0-9]\+\.[0-9]\+/IPHONEOS_DEPLOYMENT_TARGET = 12.0/g' {} \;
+      - name: Select Xcode Version
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
 
-      - name: Xcode Build and Test
+      - name: Build iOS App
         run: |
           cd ios
-          xcodebuild clean test \
-            -workspace DIMI_FRIEND.xcworkspace \
+          xcodebuild clean build -workspace DIMI_FRIEND.xcworkspace \
             -scheme DIMI_FRIEND \
-            -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.4' \
-            CODE_SIGNING_ALLOWED=NO \
-            -UseModernBuildSystem=YES
+            -sdk iphoneos \
+            -configuration Release \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Run iOS Tests
+        run: |
+          cd ios
+          xcodebuild test -workspace DIMI_FRIEND.xcworkspace \
+            -scheme DIMI_FRIEND \
+            -sdk iphonesimulator \
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=17.5'
