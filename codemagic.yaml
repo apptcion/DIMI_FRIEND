@@ -15,13 +15,13 @@ workflows:
 
       # 2. Xcode 아카이브 생성 (YourApp.xcworkspace, YourApp 스킴, Release 설정)
       - xcodebuild -project DIMI_FRIEND.xcodeproj \
-          -scheme YourApp \
+          -scheme DIMI_FRIEND \
           -configuration Release \
           -archivePath $CM_BUILD_DIR/DIMI_FRIEND.xcarchive archive
 
       # 3. 아카이브로부터 IPA 파일 생성 (exportOptions.plist 파일 필요)
       - xcodebuild -exportArchive \
-          -archivePath $CM_BUILD_DIR/YourApp.xcarchive \
+          -archivePath $CM_BUILD_DIR/DIMI_FRIEND.xcarchive \
           -exportOptionsPlist ../exportOptions.plist \
           -exportPath $CM_BUILD_DIR
 
