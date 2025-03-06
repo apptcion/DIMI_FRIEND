@@ -11,6 +11,10 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+      - name: install CocoaPods Dependency
+        run: |
+          cd ios
+          pod install
       - name: Start xcode build 🛠
         run: |
           xcodebuild clean test -project ios/DIMI_FRIEND.xcodeproj -scheme DIMI_FRIEND -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.4'
