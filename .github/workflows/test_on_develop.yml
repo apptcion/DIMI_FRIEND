@@ -10,12 +10,36 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: install CocoaPods Dependency
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Clean CocoaPods Cache and Install Dependencies
         run: |
-          npm install
           cd ios
+          pod deintegrate
+          pod cache clean --all
           pod install --repo-update
-      - name: Start xcode build 🛠
+
+      - name: Fix IPHONEOS_DEPLOYMENT_TARGET Warning
         run: |
-          xcodebuild clean test -workspace ios/DIMI_FRIEND.xcworkspace -scheme DIMI_FRIEND -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.4' CODE_SIGNING_ALLOWED=NO
+          cd ios
+          echo "Updating deployment target..."
+          find . -name "project.pbxproj" -exec sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = [0-9]\+\.[0-9]\+/IPHONEOS_DEPLOYMENT_TARGET = 12.0/g' {} \;
+
+      - name: Xcode Build and Test
+        run: |
+          cd ios
+          xcodebuild clean test \
+            -workspace DIMI_FRIEND.xcworkspace \
+            -scheme DIMI_FRIEND \
+            -destination 'platform=iOS Simulator,name=iPhone 11 Pro,OS=14.4' \
+            CODE_SIGNING_ALLOWED=NO \
+            -UseModernBuildSystem=YES

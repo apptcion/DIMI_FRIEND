@@ -1,0 +1,11 @@
+name: Deploy to App Store
+
+on:
+  push:
+    branches: [ "deploy" ]
+
+jobs: 
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
