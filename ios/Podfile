@@ -23,7 +23,7 @@ target 'DIMI_FRIEND' do
   pod 'FirebaseAppCheckInterop', :modular_headers => true;
   pod 'FirebaseCoreExtension', :modular_headers => true;
   pod 'RecaptchaInterop', :modular_headers => true;
-  pod 'FirebaseFirestoreInternal', modular_headers => true;
+  pod 'FirebaseFirestoreInternal', :modular_headers => true;
 
   use_react_native!(
     :path => config[:reactNativePath],
