@@ -17,6 +17,8 @@ target 'DIMI_FRIEND' do
 
   pod 'FirebaseCore', :modular_headers => true;
   pod 'GoogleUtilities', :modular_headers => true;
+  pod 'Firebase', :modular_headers => true;
+  pod 'FirebaseAuth', :modular_headers => true;
 
   use_react_native!(
     :path => config[:reactNativePath],
