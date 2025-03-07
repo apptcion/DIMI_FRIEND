@@ -43,6 +43,7 @@ jobs:
             -scheme DIMI_FRIEND \
             -sdk iphoneos \
             -configuration Release \
+            DEVELOPMENT_TEAM=34B6SX46T2
             CODE_SIGNING_ALLOWED=NO
 
       - name: Run iOS Tests
