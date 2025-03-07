@@ -1,3 +1,9 @@
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
 platform :ios, '15.0'
 # use_frameworks! :linkage => :static # 이 부분은 필요 없을 수 있음
 
