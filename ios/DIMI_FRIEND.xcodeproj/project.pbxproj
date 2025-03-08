@@ -443,6 +443,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-DIMI_FRIEND-DIMI_FRIENDTests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM="34B6SX46T2";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",

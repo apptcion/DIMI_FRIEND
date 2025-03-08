@@ -1,30 +1,59 @@
-name: Xcode - Build and Analyze
+name: Build and Deploy iOS App
 
 on:
   push:
-    branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
+    branches:
+      - deploy
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Build and analyse default scheme using xcodebuild command
     runs-on: macos-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set Default Scheme
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'  # 사용 중인 Ruby 버전에 맞게 설정
+
+      - name: Install Ruby dependencies
         run: |
-          scheme_list=$(xcodebuild -list -json | tr -d "\n")
-          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-          echo $default | cat >default
-          echo Using default scheme: $default
-      - name: Build
+          gem install fastlane
+          fastlane match development
+          fastlane match appstore
         env:
-          scheme: ${{ 'default' }}
+          MATCH_GIT_URL: "https://github.com/apptcion/DIMI_FRIEND.git"
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Install CocoaPods dependencies
         run: |
-          if [ $scheme = default ]; then scheme=$(cat default); fi
-          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
-          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
-          xcodebuild clean build analyze -scheme "$scheme" -"$filetype_parameter" "$file_to_build" | xcpretty && exit ${PIPESTATUS[0]}
+          cd ios
+          pod install --repo-update
+
+      - name: Build iOS App Archive
+        run: |
+          xcodebuild -workspace ios/DIMI_FRIEND.xcworkspace \
+                     -scheme DIMI_FRIEND \
+                     -configuration Release \
+                     -sdk iphoneos \
+                     -archivePath ${{ github.workspace }}/build/DIMI_FRIEND.xcarchive archive
+
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+                     -archivePath ${{ github.workspace }}/build/DIMI_FRIEND.xcarchive \
+                     -exportOptionsPlist ios/exportOptions.plist \
+                     -exportPath ${{ github.workspace }}/build
+
+      - name: Run Fastlane for Deployment
+        run: |
+          cd ios
+          bundle exec fastlane release
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}

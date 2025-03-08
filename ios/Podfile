@@ -5,7 +5,7 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
-platform :ios, min_ios_version_supported
+platform :ios, '15.0'
 prepare_react_native_project!
 
 linkage = ENV['USE_FRAMEWORKS']
@@ -13,6 +13,9 @@ if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
   use_frameworks! :linkage => linkage.to_sym
 end
+
+# Enable modular headers globally to prevent integration issues with Swift pods
+#use_modular_headers!
 
 target 'DIMI_FRIEND' do
   config = use_native_modules!
@@ -22,6 +25,20 @@ target 'DIMI_FRIEND' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  # Firebase Pods with updated versions
+  pod 'FirebaseAuth', '11.7.0', :modular_headers => true
+  pod 'RecaptchaInterop', :modular_headers => true
+  pod 'FirebaseFirestoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', '11.7.0', :modular_headers => true
+  pod 'FirebaseCoreInternal', '11.7.0', :modular_headers => true
+  pod 'FirebaseStorage', '11.7.0', :modular_headers => true
+  pod 'FirebaseCoreExtension', '11.7.0', :modular_headers => true
+  pod 'FirebaseAppCheckInterop', '11.9.0', :modular_headers => true
+  pod 'FirebaseAuthInterop', '11.9.0', :modular_headers => true
+  pod 'FirebaseMessagingInterop', '11.9.0', :modular_headers => true
+  pod 'GTMSessionFetcher', '3.4.0', :modular_headers => true
 
   target 'DIMI_FRIENDTests' do
     inherit! :complete

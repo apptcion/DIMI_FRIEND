@@ -4252,9 +4252,9 @@ logkitty@^0.7.1:
     yargs "^15.1.0"
 
 long@^5.0.0:
-  version "5.2.4"
-  resolved "https://registry.npmjs.org/long/-/long-5.2.4.tgz"
-  integrity sha512-qtzLbJE8hq7VabR3mISmVGtoXP8KGc2Z/AT8OuqlYD7JTR3oqrgwdjnk07wpj1twXxYmgDXgoKVWUG/fReSzHg==
+  version "5.3.1"
+  resolved "https://registry.npmjs.org/long/-/long-5.3.1.tgz"
+  integrity sha512-ka87Jz3gcx/I7Hal94xaN2tZEOPoUOEVftkQqZx2EeQRN7LGdfLlI3FvZ+7WDplm+vK2Urx9ULrvSowtdCieng==
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"

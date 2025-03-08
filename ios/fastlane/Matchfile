@@ -1,0 +1,6 @@
+# Matchfile
+
+git_url("https://github.com/apptcion/DIMI_FRIEND.git")  # Git 저장소 URL
+
+# 인증서 및 프로비저닝 프로파일의 유형을 설정합니다.
+type("appstore")  # appstore, adhoc, development, enterprise 중 선택
