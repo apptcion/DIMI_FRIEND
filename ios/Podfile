@@ -30,7 +30,7 @@ target 'DIMI_FRIEND' do
   pod 'FirebaseAuth', '11.9.0', :modular_headers => true
   pod 'FirebaseCore', '11.9.0', :modular_headers => true
   pod 'FirebaseCoreInternal', '11.9.0', :modular_headers => true
-  pod 'FirebaseStorageInternal', '11.9.0', :modular_headers => true
+  pod 'FirebaseStorage', '11.9.0', :modular_headers => true
   pod 'FirebaseCoreExtension', '11.9.0', :modular_headers => true
   pod 'FirebaseAppCheckInterop', '11.9.0', :modular_headers => true
   pod 'FirebaseAuthInterop', '11.9.0', :modular_headers => true
