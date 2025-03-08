@@ -1,0 +1,18 @@
+platform :ios do
+    lane :release do
+      # Xcode 프로젝트 빌드 및 아카이브
+      gym(
+        project: "DIMI_FRIEND.xcodeproj", # 변경된 부분
+        scheme: "DIMI_FRIEND",
+        configuration: "Release",
+        export_method: "app-store"
+      )
+      # App Store Connect에 업로드
+      deliver(
+        force: true,
+        skip_metadata: true,
+        skip_screenshots: true
+      )
+    end
+  end
+  
