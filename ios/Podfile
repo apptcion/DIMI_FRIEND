@@ -28,6 +28,8 @@ target 'DIMI_FRIEND' do
 
   # Firebase Pods with updated versions
   pod 'FirebaseAuth', '11.7.0', :modular_headers => true
+  pod 'RecaptchaInterop', :modular_headers => true
+  pod 'FirebaseFirestoreInternal', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
   pod 'FirebaseCore', '11.7.0', :modular_headers => true
   pod 'FirebaseCoreInternal', '11.7.0', :modular_headers => true
