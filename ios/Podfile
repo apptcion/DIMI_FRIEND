@@ -14,6 +14,9 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+# Enable modular headers globally to prevent integration issues with Swift pods
+#use_modular_headers!
+
 target 'DIMI_FRIEND' do
   config = use_native_modules!
 
@@ -23,16 +26,16 @@ target 'DIMI_FRIEND' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  # Firebase Pods with explicit versions
-  pod 'FirebaseAuth', '21.7.0', :modular_headers => true
-  pod 'FirebaseCore', '21.7.0', :modular_headers => true
-  pod 'FirebaseCoreInternal', '21.7.0', :modular_headers => true
-  pod 'FirebaseStorageInternal', '21.7.0', :modular_headers => true
-  pod 'FirebaseCoreExtension', '21.7.0', :modular_headers => true
-  pod 'FirebaseAppCheckInterop', '21.7.0', :modular_headers => true
-  pod 'FirebaseAuthInterop', '21.7.0', :modular_headers => true
-  pod 'FirebaseMessagingInterop', '21.7.0', :modular_headers => true
-  pod 'GTMSessionFetcher', '3.4.0', :modular_headers => true
+  # Firebase Pods with updated versions
+  pod 'FirebaseAuth', '11.9.0', :modular_headers => true
+  pod 'FirebaseCore', '11.9.0', :modular_headers => true
+  pod 'FirebaseCoreInternal', '11.9.0', :modular_headers => true
+  pod 'FirebaseStorageInternal', '11.9.0', :modular_headers => true
+  pod 'FirebaseCoreExtension', '11.9.0', :modular_headers => true
+  pod 'FirebaseAppCheckInterop', '11.9.0', :modular_headers => true
+  pod 'FirebaseAuthInterop', '11.9.0', :modular_headers => true
+  pod 'FirebaseMessagingInterop', '11.9.0', :modular_headers => true
+  pod 'GTMSessionFetcher', '11.9.0', :modular_headers => true
 
   target 'DIMI_FRIENDTests' do
     inherit! :complete
