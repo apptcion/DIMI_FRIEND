@@ -16,13 +16,22 @@ end
 
 target 'DIMI_FRIEND' do
   config = use_native_modules!
-  pod 'GoogleUtilities', :modular_headers => true
 
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  pod 'FirebaseAuth', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'FirebaseStorageInternal', :modular_headers => true
+  pod 'FirebaseCoreExtension', :modular_headers => true
+  pod 'FirebaseAppCheckInterop', :modular_headers => true
+  pod 'FirebaseAuthInterop', :modular_headers => true
+  pod 'FirebaseMessagingInterop', :modular_headers => true
+  pod 'GTMSessionFetcher', :modular_headers => true
 
   target 'DIMI_FRIENDTests' do
     inherit! :complete
