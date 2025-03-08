@@ -28,13 +28,14 @@ target 'DIMI_FRIEND' do
 
   # Firebase Pods with updated versions
   pod 'FirebaseAuth', '11.7.0', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
   pod 'FirebaseCore', '11.7.0', :modular_headers => true
-  pod 'FirebaseCoreInternal', '11.7.0', :modular_headers => true
+  pod 'FirebaseCoreInternal', '11.9.0', :modular_headers => true
   pod 'FirebaseStorage', '11.7.0', :modular_headers => true
   pod 'FirebaseCoreExtension', '11.7.0', :modular_headers => true
-  pod 'FirebaseAppCheckInterop', '11.7.0', :modular_headers => true
-  pod 'FirebaseAuthInterop', '11.7.0', :modular_headers => true
-  pod 'FirebaseMessagingInterop', '11.7.0', :modular_headers => true
+  pod 'FirebaseAppCheckInterop', '11.9.0', :modular_headers => true
+  pod 'FirebaseAuthInterop', '11.9.0', :modular_headers => true
+  pod 'FirebaseMessagingInterop', '11.9.0', :modular_headers => true
   pod 'GTMSessionFetcher', '3.4.0', :modular_headers => true
 
   target 'DIMI_FRIENDTests' do
