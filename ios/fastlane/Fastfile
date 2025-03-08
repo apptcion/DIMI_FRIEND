@@ -1,5 +1,10 @@
 platform :ios do
     lane :release do
+        storage_mode('git')
+        git_url("https://github.com/apptcion/DIMI_FRIEND.git")
+        type("appstore")
+        username("dimigoluna@gmail.com")
+
       # Xcode 프로젝트 빌드 및 아카이브
       gym(
         project: "DIMI_FRIEND.xcodeproj", # 변경된 부분
