@@ -35,7 +35,7 @@ target 'DIMI_FRIEND' do
   pod 'FirebaseAppCheckInterop', '11.9.0', :modular_headers => true
   pod 'FirebaseAuthInterop', '11.9.0', :modular_headers => true
   pod 'FirebaseMessagingInterop', '11.9.0', :modular_headers => true
-  pod 'GTMSessionFetcher', '2.1.0', :modular_headers => true
+  pod 'GTMSessionFetcher', '3.4.0', :modular_headers => true
 
   target 'DIMI_FRIENDTests' do
     inherit! :complete
