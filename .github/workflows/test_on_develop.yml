@@ -25,7 +25,7 @@ jobs:
       - name: Install Pods dependencies
         run: |
           cd ios
-          pod install
+          pod install --repo-update
 
       - name: Build iOS App Archive
         run: |
