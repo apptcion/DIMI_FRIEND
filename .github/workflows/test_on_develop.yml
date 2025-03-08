@@ -25,7 +25,7 @@ jobs:
           fastlane match development
           fastlane match appstore
         env:
-          GIT_URL: "https://github.com/apptcion/DIMI_FRIEND.git"
+          MATCH_GIT_URL: "https://github.com/apptcion/DIMI_FRIEND.git"
       - name: Install Node.js dependencies
         run: npm install
 
