@@ -19,10 +19,10 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install JavaScript dependencies
-        run: yarn install
+      - name: Install JS dependencies
+        run: npm install
 
-      - name: Install CocoaPods dependencies
+      - name: Install Pods dependencies
         run: |
           cd ios
           pod install
