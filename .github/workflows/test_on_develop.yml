@@ -25,6 +25,7 @@ jobs:
       - name: Install Pods dependencies
         run: |
           cd ios
+          pod cache clean --all
           pod install --repo-update
 
       - name: Build iOS App Archive
@@ -45,9 +46,8 @@ jobs:
       - name: Run Fastlane for Deployment
         run: |
           cd ios
-          fastlane release
+          bundle exec fastlane release
         env:
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
-          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
-          # 필요에 따라 추가적인 환경변수를 설정하세요.
+          APPLE_ID: ${{ secrets.APPLE_ID }}  # Apple ID (이메일 주소)
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}  # Apple ID 비밀번호 또는 앱 전용 비밀번호
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}  # Fastlane용 앱 전용 비밀번호
