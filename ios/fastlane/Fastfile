@@ -6,7 +6,8 @@ platform :ios do
     # 인증서 및 프로비저닝 처리 (예: match 사용)
     match(
   type: "appstore",
-  git_url: "https://x-access-token:#{ENV['PAT']}@github.com/apptcion/key_chain.git"
+  git_url: "https://github.com/apptcion/key_chain.git",
+  git_basic_authorization: Base64.strict_encode64("username:#{ENV['PAT']}")
 )
 
 # 앱 아카이브 빌드
