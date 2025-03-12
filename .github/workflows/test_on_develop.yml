@@ -54,6 +54,7 @@ jobs:
           bundle install
           bundle exec fastlane release
         env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           PAT: ${{ secrets.PAT}}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
