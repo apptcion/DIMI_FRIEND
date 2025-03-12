@@ -57,5 +57,6 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           PAT: ${{ secrets.PAT}}
           APPLE_ID: ${{ secrets.APPLE_ID }}
+          FASTLANE_USER: ${{ secrets.APPLE_ID}}
           FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
           FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
