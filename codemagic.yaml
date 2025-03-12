@@ -1,0 +1,35 @@
+workflows:
+  ios_app_store:
+    name: Build & Deploy iOS App to App Store
+    environment:
+      # Codemagic가 제공하는 최신 macOS 이미지와 Xcode 버전을 사용합니다.
+      xcode: latest
+      # 앱 서명에 필요한 환경 변수 (Codemagic 대시보드에 미리 등록하거나 secrets로 설정)
+      vars:
+        APPLE_DEVELOPER_TEAM_ID: "34B6SX46T2"  # Apple Developer Team ID 입력
+        CERTIFICATE_PASSWORD: $CERT_PASSWORD       # p12 파일 비밀번호, Codemagic 환경변수로 관리
+    scripts:
+      # 1. iOS 디렉토리로 이동 및 CocoaPods 설치
+      - cd ios
+      - pod install
+
+      # 2. Xcode 아카이브 생성 (YourApp.xcworkspace, YourApp 스킴, Release 설정)
+      - xcodebuild -project DIMI_FRIEND.xcodeproj \
+          -scheme DIMI_FRIEND \
+          -configuration Release \
+          -archivePath $CM_BUILD_DIR/DIMI_FRIEND.xcarchive archive
+
+      # 3. 아카이브로부터 IPA 파일 생성 (exportOptions.plist 파일 필요)
+      - xcodebuild -exportArchive \
+          -archivePath $CM_BUILD_DIR/DIMI_FRIEND.xcarchive \
+          -exportOptionsPlist ../exportOptions.plist \
+          -exportPath $CM_BUILD_DIR
+
+    artifacts:
+      - $CM_BUILD_DIR/*.ipa
+
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY         # App Store Connect API 키 (Codemagic 대시보드 secrets에 등록)
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID   # App Store Connect API Issuer ID

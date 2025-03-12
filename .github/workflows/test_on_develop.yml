@@ -1,0 +1,59 @@
+name: Build and Deploy iOS App
+
+on:
+  push:
+    branches:
+      - deploy
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'  # 사용 중인 Ruby 버전에 맞게 설정
+
+      - name: Install Ruby dependencies
+        run: |
+          gem install fastlane
+
+        env:
+          MATCH_GIT_URL: "https://github.com/apptcion/DIMI_FRIEND.git"
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Install CocoaPods dependencies
+        run: |
+          cd ios
+          pod install --repo-update
+
+      # - name: Build iOS App Archive
+      #   run: |
+      #     xcodebuild -workspace ios/DIMI_FRIEND.xcworkspace \
+      #                -scheme DIMI_FRIEND \
+      #                -configuration Release \
+      #                -sdk iphoneos \
+      #                -archivePath ${{ github.workspace }}/build/DIMI_FRIEND.xcarchive archive
+
+      # - name: Export IPA
+      #   run: |
+      #     xcodebuild -exportArchive \
+      #                -archivePath ${{ github.workspace }}/build/DIMI_FRIEND.xcarchive \
+      #                -exportOptionsPlist ios/exportOptions.plist \
+      #                -exportPath ${{ github.workspace }}/build
+
+      - name: Run Fastlane for Deployment
+        run: |
+          cd ios
+          bundle install
+          bundle exec fastlane release
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}

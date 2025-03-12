@@ -1,0 +1,26 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build and deploy to App Store"
+  lane :release do
+    # 인증서 및 프로비저닝 처리 (예: match 사용)
+    match(
+      type: "appstore",
+      git_url: "https://x-access-token:#{ENV['PAT_TOKEN']}@github.com/apptcion/DIM_FRIEND_KEY_CHAIN.git"
+    )
+# 앱 아카이브 빌드
+    gym(
+      project: "DIMI_FRIEND.xcodeproj",
+      scheme: "DIMI_FRIEND",
+      configuration: "Release",
+      export_method: "app-store"
+    )
+
+    # App Store에 업로드 (deliver 사용)
+    deliver(
+      ipa: "./build/DIMI_FRIEND.ipa",
+      skip_screenshots: true,
+      skip_metadata: true
+    )
+  end
+end
