@@ -7,7 +7,7 @@ platform :ios do
     match(
   type: "appstore",
   git_url: "https://github.com/apptcion/key_chain.git",
-  git_basic_authorization: Base64.strict_encode64("username:#{ENV['PAT']}")
+  git_basic_authorization: Base64.strict_encode64("apptcion:#{ENV['PAT']}")
 )
 
 # 앱 아카이브 빌드
