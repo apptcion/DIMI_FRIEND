@@ -18,6 +18,7 @@ platform :ios do
 
     # App Store에 업로드 (deliver 사용)
     deliver(
+      username: ENV["APPLE_ID"],
       ipa: "./build/DIMI_FRIEND.ipa",
       skip_screenshots: true,
       skip_metadata: true
