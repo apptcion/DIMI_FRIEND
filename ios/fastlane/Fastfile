@@ -5,9 +5,10 @@ platform :ios do
   lane :release do
     # 인증서 및 프로비저닝 처리 (예: match 사용)
     match(
-      type: "appstore",
-      git_url: "https://github.com/apptcion/key_chain.git"
-    )
+  type: "appstore",
+  git_url: "https://x-access-token:#{ENV['PAT']}@github.com/apptcion/key_chain.git"
+)
+
 # 앱 아카이브 빌드
     gym(
       project: "DIMI_FRIEND.xcodeproj",
