@@ -11,6 +11,11 @@ platform :ios do
       app_identifier: ENV["APP_IDENTIFIER"]
     )
 
+    update_project_team(
+      path: "DIMI_FRIEND.xcodeproj",
+      teamid: "34B6SX46T2"
+    )
+
 # 앱 아카이브 빌드
     gym(
       project: "DIMI_FRIEND.xcodeproj",
