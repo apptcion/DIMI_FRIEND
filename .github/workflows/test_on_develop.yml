@@ -48,3 +48,4 @@ jobs:
           FASTLANE_KEY_ID: ${{ secrets.KEY_ID }}
           FASTLANE_ISSUER_ID: ${{ secrets.ISSUER_ID }}
           FASTLANE_KEY_CONTENT: ${{ secrets.KEY_CONTENTS }}
+          FASTLANE_SESSION: ${{ secrets.FASTLANE_SESSION }}
