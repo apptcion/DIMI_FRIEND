@@ -32,22 +32,7 @@ jobs:
         run: |
           cd ios
           pod install --repo-update
-
-      # - name: Build iOS App Archive
-      #   run: |
-      #     xcodebuild -workspace ios/DIMI_FRIEND.xcworkspace \
-      #                -scheme DIMI_FRIEND \
-      #                -configuration Release \
-      #                -sdk iphoneos \
-      #                -archivePath ${{ github.workspace }}/build/DIMI_FRIEND.xcarchive archive
-
-      # - name: Export IPA
-      #   run: |
-      #     xcodebuild -exportArchive \
-      #                -archivePath ${{ github.workspace }}/build/DIMI_FRIEND.xcarchive \
-      #                -exportOptionsPlist ios/exportOptions.plist \
-      #                -exportPath ${{ github.workspace }}/build
-
+          
       - name: Run Fastlane for Deployment
         run: |
           cd ios
