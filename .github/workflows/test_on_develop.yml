@@ -33,6 +33,11 @@ jobs:
           cd ios
           pod install --repo-update
 
+      - name: Unlock keychain
+        run: |
+          security unlock-keychain -p "" ~/Library/Keychains/login.keychain-db
+          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/login.keychain-db
+
       - name: Run Fastlane for Deployment
         run: |
           cd ios
