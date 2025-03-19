@@ -6,12 +6,15 @@ require Pod::Executable.execute_command('node', ['-p',
   )', __dir__]).strip
 
 platform :ios, '15.0'
+use_modular_headers!    # 이 줄을 추가 또는 주석 해제
+
 prepare_react_native_project!
 
-# (선택 사항) USE_FRAMEWORKS 환경변수가 없다면, 필요에 따라 use_frameworks! 설정 추가 가능
-# unless ENV['USE_FRAMEWORKS']
-#   use_frameworks! :linkage => :static
-# end
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
 
 target 'DIMI_FRIEND' do
   config = use_native_modules!
@@ -21,7 +24,7 @@ target 'DIMI_FRIEND' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  # Firebase Pods (modular_headers 옵션 제거)
+  # Firebase Pods (버전은 필요에 따라 조정)
   pod 'FirebaseAuth', '11.7.0'
   pod 'RecaptchaInterop'
   pod 'FirebaseFirestoreInternal'
@@ -40,7 +43,6 @@ target 'DIMI_FRIEND' do
   end
 
   post_install do |installer|
-    # 모든 타겟에서 모듈 사용을 강제
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings['CLANG_ENABLE_MODULES'] = 'YES'
