@@ -17,6 +17,7 @@ jobs:
       - name: Create new keychain
         run: |
           security create-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} new_login.keychain
+          security list-keychains -s new_login.keychain ~/Library/Keychains/login.keychain
 
       - name: Set keychain password
         run: |
