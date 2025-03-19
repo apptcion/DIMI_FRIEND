@@ -43,13 +43,15 @@ gym(
   export_method: "app-store",
   export_team_id: "34B6SX46T2",
   xcargs: "CODE_SIGNING_STYLE=Manual CODE_SIGN_IDENTITY='Apple Distribution: sangjeong lee (34B6SX46T2)' PROVISIONING_PROFILE_SPECIFIER='match AppStore #{ENV['APP_IDENTIFIER']}' -allowProvisioningUpdates",
+  xcconfig: "ios/Configs/ManualSigning.xcconfig",   # xcconfig 파일 적용
   export_options: {
-    signingStyle: "manual",   # 쉼표 추가
+    signingStyle: "manual",
     provisioningProfiles: {
       ENV["APP_IDENTIFIER"] => "match AppStore #{ENV["APP_IDENTIFIER"]}"
     }
   }
 )
+
 
 
     api_key = app_store_connect_api_key(
