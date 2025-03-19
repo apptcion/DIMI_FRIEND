@@ -1,4 +1,20 @@
 default_platform(:ios)
+before_all do
+  keychain_name = "new_login.keychain"
+  keychain_password = ENV["KEYCHAIN_PASSWORD"]
+  
+  # 새 키체인이 이미 있으면 생성 오류가 발생할 수 있으므로 rescue 처리
+  sh "security create-keychain -p #{keychain_password} #{keychain_name}" rescue nil
+  
+  # 새 키체인을 기본 키체인으로 설정
+  sh "security default-keychain -s #{keychain_name}"
+  
+  # 새 키체인을 잠금 해제
+  sh "security unlock-keychain -p #{keychain_password} #{keychain_name}"
+  
+  # 키체인 설정(예: 자동 잠금 해제 시간 설정)
+  sh "security set-keychain-settings -t 3600 -l ~/Library/Keychains/#{keychain_name}"
+end
 
 platform :ios do
   desc "Build and deploy to App Store"
