@@ -10,7 +10,8 @@ platform :ios do
       git_basic_authorization: Base64.strict_encode64("apptcion:#{ENV['PAT']}"),
       app_identifier: ENV["APP_IDENTIFIER"],
       keychain_name: "new_login.keychain",
-      keychain_password: ENV["KEYCHAIN_PASSWORD"]
+      keychain_password: ENV["KEYCHAIN_PASSWORD"],
+      readonly: true
     )
 
     update_project_team(

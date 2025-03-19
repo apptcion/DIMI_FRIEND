@@ -30,9 +30,12 @@ jobs:
       - name: Install Ruby dependencies
         run: |
           gem install fastlane
-
         env:
           MATCH_GIT_URL: "https://github.com/apptcion/DIMI_FRIEND.git"
+      
+      - name: select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
+      
       - name: Install Node.js dependencies
         run: npm install
 
