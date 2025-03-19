@@ -14,6 +14,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Create new keychain
+        run: |
+          security create-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} login.keychain
+
+      - name: Set keychain password
+        run: |
+          security unlock-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} login.keychain
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
