@@ -42,7 +42,7 @@ gym(
   configuration: "Release",
   export_method: "app-store",
   export_team_id: "34B6SX46T2",
-  xcargs: "-xcconfig ios/Configs/ManualSigning.xcconfig CODE_SIGNING_STYLE=Manual CODE_SIGN_IDENTITY='Apple Distribution: sangjeong lee (34B6SX46T2)' PROVISIONING_PROFILE_SPECIFIER='match AppStore #{ENV['APP_IDENTIFIER']}' -allowProvisioningUpdates",
+  xcargs: "-xcconfig ios/Config/ManualSigning.xcconfig CODE_SIGNING_STYLE=Manual CODE_SIGN_IDENTITY='Apple Distribution: sangjeong lee (34B6SX46T2)' PROVISIONING_PROFILE_SPECIFIER='match AppStore #{ENV['APP_IDENTIFIER']}' -allowProvisioningUpdates",
   export_options: {
     signingStyle: "manual",
     provisioningProfiles: {
