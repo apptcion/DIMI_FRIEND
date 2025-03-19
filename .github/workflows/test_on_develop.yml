@@ -16,11 +16,11 @@ jobs:
 
       - name: Create new keychain
         run: |
-          security create-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} login.keychain
+          security create-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} new_login.keychain
 
       - name: Set keychain password
         run: |
-          security unlock-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} login.keychain
+          security unlock-keychain -p ${{ secrets.KEYCHAIN_PASSWORD }} new_login.keychain
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -40,11 +40,6 @@ jobs:
         run: |
           cd ios
           pod install --repo-update
-
-      - name: Unlock keychain
-        run: |
-          security unlock-keychain -p "" ~/Library/Keychains/login.keychain-db
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/login.keychain-db
 
       - name: Run Fastlane for Deployment
         run: |

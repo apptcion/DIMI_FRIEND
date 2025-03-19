@@ -8,7 +8,9 @@ platform :ios do
       type: "appstore",
       git_url: "https://github.com/apptcion/key_chain.git",
       git_basic_authorization: Base64.strict_encode64("apptcion:#{ENV['PAT']}"),
-      app_identifier: ENV["APP_IDENTIFIER"]
+      app_identifier: ENV["APP_IDENTIFIER"],
+      keychain_name: "new_login.keychain",
+      keychain_password: ENV["KEYCHAIN_PASSWORD"]
     )
 
     update_project_team(
