@@ -36,14 +36,19 @@ platform :ios do
     )
 
 # 앱 아카이브 빌드
-    gym(
-      project: "DIMI_FRIEND.xcodeproj",
-      scheme: "DIMI_FRIEND",
-      configuration: "Release",
-      export_method: "app-store",
-      export_team_id: "34B6SX46T2",
-      xcargs: "-allowProvisioningUpdates"
-    )
+gym(
+  project: "DIMI_FRIEND.xcodeproj",
+  scheme: "DIMI_FRIEND",
+  configuration: "Release",
+  export_method: "app-store",
+  export_team_id: "34B6SX46T2",
+  xcargs: "CODE_SIGNING_STYLE=Manual -allowProvisioningUpdates",
+  export_options: {
+    provisioningProfiles: {
+      ENV["APP_IDENTIFIER"] => "match AppStore #{ENV["APP_IDENTIFIER"]}"
+    }
+  }
+)
 
     api_key = app_store_connect_api_key(
       key_id: ENV["FASTLANE_KEY_ID"],
