@@ -44,7 +44,7 @@ gym(
   export_team_id: "34B6SX46T2",
   xcargs: "CODE_SIGNING_STYLE=Manual CODE_SIGN_IDENTITY='Apple Distribution: sangjeong lee (34B6SX46T2)' PROVISIONING_PROFILE_SPECIFIER='match AppStore #{ENV['APP_IDENTIFIER']}' -allowProvisioningUpdates",
   export_options: {
-    signingStyle: "manual"
+    signingStyle: "manual",   # 쉼표 추가
     provisioningProfiles: {
       ENV["APP_IDENTIFIER"] => "match AppStore #{ENV["APP_IDENTIFIER"]}"
     }
