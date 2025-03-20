@@ -44,20 +44,24 @@ target 'DIMI_FRIEND' do
 
   post_install do |installer|
     installer.pods_project.targets.each do |target|
+      # gRPC 관련 타겟은 모듈 정의를 끄도록 설정 (모듈맵 생성을 우회)
+      if target.name.include?("gRPC")
+        target.build_configurations.each do |config|
+          config.build_settings['DEFINES_MODULE'] = 'NO'
+        end
+      end
+  
+      # 모든 타겟에 대해 배포 대상(iOS deployment target) 및 모듈 활성화 설정
       target.build_configurations.each do |config|
-        # 필요한 빌드 설정들을 한 번에 적용합니다.
         config.build_settings['CLANG_ENABLE_MODULES'] = 'YES'
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
       end
     end
   
-    # react_native_post_install은 한 번만 호출해야 합니다.
     react_native_post_install(
       installer,
       config[:reactNativePath],
       :mac_catalyst_enabled => false
     )
   end
-  
-
 end
