@@ -37,7 +37,7 @@ platform :ios do
 
 # 앱 아카이브 빌드
 gym(
-  project: "DIMI_FRIEND.xcodeproj",
+  workspace: "DIMI_FRIEND.xcworkspace",
   scheme: "DIMI_FRIEND",
   configuration: "Release",
   export_method: "app-store",
@@ -50,6 +50,7 @@ gym(
     }
   }
 )
+
     api_key = app_store_connect_api_key(
       key_id: ENV["FASTLANE_KEY_ID"],
       issuer_id: ENV["FASTLANE_ISSUER_ID"],
