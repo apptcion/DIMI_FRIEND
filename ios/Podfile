@@ -54,20 +54,18 @@ target 'DIMI_FRIEND' do
   
       # gRPC-C++ 타겟에서 dummy 파일 제거
       if target.name == 'gRPC-C++'
-        target.source_build_phase.files.each do |file|
-          if file.file_ref.path == 'gRPC-C++-dummy.m'
-            file.remove_from_build_phase
-          end
+        target.source_build_phase.files.delete_if do |file|
+          file.file_ref.path == 'gRPC-C++-dummy.m'
         end
       end
   
       # 모든 타겟에 대해 추가 빌드 설정 적용
       target.build_configurations.each do |config|
         config.build_settings['CLANG_ENABLE_MODULES'] = 'YES'
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
       end
     end
-
+  
     react_native_post_install(
       installer,
       config[:reactNativePath],
