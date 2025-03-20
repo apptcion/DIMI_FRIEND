@@ -5,8 +5,8 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
-platform :ios, '15.0'
-#use_modular_headers!    # 이 줄을 추가 또는 주석 해제
+platform :ios, '12.0'
+use_modular_headers!    # 이 줄을 추가 또는 주석 해제
 
 prepare_react_native_project!
 
