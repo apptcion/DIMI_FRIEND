@@ -1,3 +1,4 @@
+use_modular_headers!
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
@@ -6,7 +7,7 @@ require Pod::Executable.execute_command('node', ['-p',
   )', __dir__]).strip
 
 platform :ios, '14.0'
-use_modular_headers!    # 이 줄을 추가 또는 주석 해제
+#use_modular_headers!    # 이 줄을 추가 또는 주석 해제
 
 prepare_react_native_project!
 
@@ -25,18 +26,18 @@ target 'DIMI_FRIEND' do
   )
 
   # Firebase Pods (버전은 필요에 따라 조정)
-  pod 'FirebaseAuth', '11.7.0'
-  pod 'RecaptchaInterop'
-  pod 'FirebaseFirestoreInternal'
-  pod 'GoogleUtilities'
-  pod 'FirebaseCore', '11.7.0'
-  pod 'FirebaseCoreInternal', '11.7.0'
-  pod 'FirebaseStorage', '11.7.0'
-  pod 'FirebaseCoreExtension', '11.7.0'
-  pod 'FirebaseAppCheckInterop', '11.9.0'
-  pod 'FirebaseAuthInterop', '11.9.0'
-  pod 'FirebaseMessagingInterop', '11.9.0'
-  pod 'GTMSessionFetcher', '3.4.0'
+  pod 'FirebaseAuth', '11.7.0', :modular_headers => true
+  pod 'RecaptchaInterop', :modular_headers => true
+  pod 'FirebaseFirestoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', '11.7.0', :modular_headers => true
+  pod 'FirebaseCoreInternal', '11.7.0', :modular_headers => true
+  pod 'FirebaseStorage', '11.7.0', :modular_headers => true
+  pod 'FirebaseCoreExtension', '11.7.0', :modular_headers => true
+  pod 'FirebaseAppCheckInterop', '11.9.0', :modular_headers => true
+  pod 'FirebaseAuthInterop', '11.9.0', :modular_headers => true
+  pod 'FirebaseMessagingInterop', '11.9.0', :modular_headers => true
+  pod 'GTMSessionFetcher', '3.4.0', :modular_headers => true
 
   target 'DIMI_FRIENDTests' do
     inherit! :complete
